@@ -14,45 +14,38 @@ public class Auto {
 		this.costo_giornaliero = costo_giornaliero;
 	}
 
-	public String getCf() {
-		return cf;
+	public String getTarga() {
+		return targa;
 	}
 
-	public void setId(String cf) {
-		this.cf = cf;
+	public void setTarga(String targa) {
+		this.targa = targa;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getMarca() {
+		return marca;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 
-	public String getCognome() {
-		return cognome;
+	public String getModello() {
+		return modello;
 	}
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
+	public void setModello(String modello) {
+		this.modello = modello;
 	}
 
-	public String getIndirizzo(String indirizzo) {
-		return indirizzo;
+	public int getCosto(int costo_giornaliero) {
+		return costo_giornaliero;
 	}
 
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
+	public void setCosto(int costo_giornaliero) {
+		this.costo_giornaliero = costo_giornaliero;
 	}
 	
-	public String getTelefono(String telefono) {
-		return telefono;
-	}
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
+	
 
 }
