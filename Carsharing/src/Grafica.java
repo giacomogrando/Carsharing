@@ -47,14 +47,18 @@ public class Grafica {
 		shlCarsharing.setText("Carsharing");
 		
 		Label label = new Label(shlCarsharing, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label.setBounds(0, 200, 694, 10);
+		label.setBounds(0, 233, 694, 10);
 		
 		List list = new List(shlCarsharing, SWT.BORDER);
-		list.setBounds(23, 10, 135, 166);
+		list.setBounds(23, 10, 200, 195);
 		
 		Button btnNewButton = new Button(shlCarsharing, SWT.NONE);
 		btnNewButton.setText("ELENCO NOLLEGGI");
-		btnNewButton.setBounds(188, 54, 114, 70);
+		btnNewButton.setBounds(259, 22, 114, 70);
+		
+		Label lblNewLabel = new Label(shlCarsharing, SWT.NONE);
+		lblNewLabel.setImage(SWTResourceManager.getImage(Grafica.class, "/img/images.jpg"));
+		lblNewLabel.setBounds(462, 0, 200, 227);
 
 	}
 }
