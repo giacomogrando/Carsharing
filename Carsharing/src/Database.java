@@ -1,40 +1,41 @@
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.io.IOException;
+import java.sql.*;
 
 public class Database {
-	private static Connection cn;
-	private static Statement st;
-	private static ResultSet rs;
+	public static void main(String[] args) {
+		Connection cn;
+		Statement st;
+		ResultSet rs;
+		String sql;
+		// ________________________________connessione
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException: ");
+			System.err.println(e.getMessage());
+		} // fine try-catch
 
-	ArrayList<Noleggio> elenco = new ArrayList<Noleggio>();
-	String sql;
+		try {
+			// modifico nome database con il mio (prova)
 
-	// Creo la connessione al database
-	cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
+			cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/carsharing?user=root&password=");
+			// jdbc:mysql://localhost:3306/Contatti?user=root&password=secret
 
-	sql="SELECT * FROM noleggi WHERE inizio>='"+dataI+"' AND socio='"+nome+"';";
-	// ________________________________query
+			sql = "SELECT * FROM noleggi;";
+			// ________________________________query
+			st = cn.createStatement();
+			rs = st.executeQuery(sql);
+			while (rs.next() == true) {
+				
+				System.out.println(rs.getInt("codice_noleggio") + "\t" + rs.getString("auto") + "\t"
+						+ rs.getString("socio") + "\t" + rs.getDate("inzio") + "\t" + rs.getDate("fine") + "\t"
+						+ rs.getBoolean("auto_restituita"));
 
-	st=cn.createStatement(); // creo sempre uno statement sulla
-								// connessione
-	rs=st.executeQuery(sql); // faccio la query su uno statement
-	while(rs.next()==true)
+			}
+			cn.close(); // chiusura connessione
+		} catch (SQLException e) {
+			System.out.println("errore:" + e.getMessage());
+		} // fine try-catch
 
-	{
-		Noleggio n = new Noleggio(rs.getString("codice_noleggio"), rs.getString("auto"), rs.getString("socio"),
-				rs.getDate("inizio"), rs.getDate("fine"), rs.getInt("auto_restituita"));
-		elenco.add(n);
-	}
-
-	cn.close(); // chiusura connessione
-
-	return elenco;
-}}
+	}// fine main
+}// fine classe
