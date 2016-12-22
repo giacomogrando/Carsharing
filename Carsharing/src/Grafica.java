@@ -1,18 +1,26 @@
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.Date;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class Grafica {
 
 	protected Shell shlCarsharing;
-	private Text txtnomesocio;
-
+	private Text txtnome;
+	String dateInizio=null;
+	String nome=null;
 	/**
 	 * Launch the application.
 	 * @param args
@@ -56,6 +64,26 @@ public class Grafica {
 		list.setBounds(23, 50, 173, 233);
 		
 		Button btnNewButton = new Button(shlCarsharing, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String dataI = dateInizio.getYear() + "-" + (dateInizio.getMonth() + 1) + "-" + dateInizio.getDay();
+				ArrayList<Noleggio> noleggi = new ArrayList<Noleggio>();
+				System.out.println(dataI);
+				nome = txtnome.getText();
+				try {
+					noleggi = Database.elencoNoleggioSocio(dataI, nome);
+				} catch (ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for (int i = 0; i < noleggi.size(); i++) {
+					list.add(noleggi.get(i).getCodice() + " - " + noleggi.get(i).getAuto() + " - "
+							+ noleggi.get(i).getInizio() + " - " + noleggi.get(i).getFine() + " - "
+							+ noleggi.get(i).getRestituita());
+				}
+			}
+		});
 		btnNewButton.setText("CERCA");
 		btnNewButton.setBounds(245, 232, 124, 51);
 		
@@ -78,8 +106,8 @@ public class Grafica {
 		lblNomeSocio.setBounds(245, 105, 77, 15);
 		lblNomeSocio.setText("Nome socio");
 		
-		txtnomesocio = new Text(shlCarsharing, SWT.BORDER);
-		txtnomesocio.setBounds(336, 99, 76, 21);
+		txtnome = new Text(shlCarsharing, SWT.BORDER);
+		txtnome.setBounds(336, 99, 76, 21);
 		
 		Label lblDataInzio = new Label(shlCarsharing, SWT.NONE);
 		lblDataInzio.setBounds(245, 151, 77, 15);
