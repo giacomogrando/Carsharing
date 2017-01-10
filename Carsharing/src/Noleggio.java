@@ -4,15 +4,17 @@ public class Noleggio {
 	
 	int codice;
 	String auto;
-	String socio;
+	String nome;
+	String cognome;
 	Date inizio;
 	Date fine;
-	int restituita;
+	boolean restituita;
 
-	public Noleggio(int codice, String auto, String socio, Date inizio, Date fine, int restituita) {
+	public Noleggio(int codice, String auto, String nome, String cognome, Date inizio, Date fine, boolean restituita) {
 		this.codice = codice;
 		this.auto = auto;
-		this.socio = socio;
+		this.nome = nome;
+		this.cognome = cognome;
 		this.inizio = inizio;
 		this.fine = fine;
 		this.restituita = restituita;
@@ -21,6 +23,10 @@ public class Noleggio {
 
 	public int getCodice() {
 		return codice;
+	}
+	
+	public String getCognome() {
+		return cognome;
 	}
 
 	public void setCodice(int codice) {
@@ -35,12 +41,12 @@ public class Noleggio {
 		this.auto = auto;
 	}
 
-	public String getSocio() {
-		return socio;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setSocio(String socio) {
-		this.socio = socio;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Date getInizio() {
@@ -59,10 +65,10 @@ public class Noleggio {
 		this.fine = fine;
 	}
 	
-	public int getrestituita() {
+	public boolean getrestituita() {
 		return restituita;
 	}
-	public void setrestituita(int restituita) {
+	public void setrestituita(boolean restituita) {
 		this.restituita = restituita;
 	}
 }

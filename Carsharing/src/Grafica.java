@@ -3,17 +3,30 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.sql.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.DateTime;
+
+import java.text.SimpleDateFormat;
+
+
+
+import java.util.Calendar;
+//import java.util.Date;
+import java.util.Date;
+
+import javax.swing.JList;
+
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.DateTime;
+
 
 public class Grafica {
 
@@ -76,11 +89,23 @@ public class Grafica {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				int giorno = dateTime.getDay();
-				int mese = dateTime.getMonth() + 1;
-				int anno = dateTime.getYear();
+				String nome = txtnome.getText();
+				java.text.DateFormat data = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataN = null;
+				try {
+					dataN = (Date)(data.parse(dateTime.getYear() + "-" + dateTime.getMonth() + "-" + dateTime.getDay()));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
-				Database.main(null);
+				noleggi = Database.noleggiPerSocio(dataN, nome);
+				
+				list.removeAll(); // Ripulisco la lista
+				
+				for (int i = 0; i < noleggi.size(); i++) {
+					list.add(noleggi.get(i).getAuto() + " " + noleggi.get(i).getCodice() + " " + noleggi.get(i).getInizio());
+				}
 				
 				
 				
