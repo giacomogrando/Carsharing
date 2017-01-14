@@ -35,6 +35,8 @@ public class Grafica {
 	Date dateTime = null;
 	String nome = null;
 	ArrayList<Noleggio> noleggi = new ArrayList<Noleggio>();
+	ArrayList<Auto> auto = new ArrayList<Auto>();
+	
 
 	/**
 	 * Launch the application.
@@ -157,12 +159,34 @@ public class Grafica {
 		lblNomeSocio.setText("Nome socio");
 		
 		Label lblInizio = new Label(shlCarsharing, SWT.NONE);
-		lblInizio.setBounds(10, 286, 55, 15);
+		lblInizio.setBounds(319, 331, 55, 15);
 		lblInizio.setText("Inizio :");
 		
 		Label lblFine = new Label(shlCarsharing, SWT.NONE);
-		lblFine.setBounds(156, 286, 55, 15);
+		lblFine.setBounds(419, 331, 55, 15);
 		lblFine.setText("Fine : ");
+		
+		List list_10 = new List(shlCarsharing, SWT.BORDER);
+		list_10.setBounds(15, 312, 71, 168);
+		
+		List list_20 = new List(shlCarsharing, SWT.BORDER);
+		list_20.setBounds(112, 312, 71, 168);
+		
+		List list_30 = new List(shlCarsharing, SWT.BORDER);
+		list_30.setBounds(207, 312, 71, 168);
+		
+		Label lblTarga = new Label(shlCarsharing, SWT.NONE);
+		lblTarga.setBounds(15, 291, 55, 15);
+		lblTarga.setText("Targa ");
+		
+		Label lblMarca = new Label(shlCarsharing, SWT.NONE);
+		lblMarca.setBounds(113, 291, 55, 15);
+		lblMarca.setText("Marca");
+		
+		Label lblModello = new Label(shlCarsharing, SWT.NONE);
+		lblModello.setBounds(207, 291, 55, 15);
+		lblModello.setText("Modello");
+
 		
 		Button btnAutoDisponibili = new Button(shlCarsharing, SWT.NONE);
 		btnAutoDisponibili.addSelectionListener(new SelectionAdapter() {
@@ -186,28 +210,26 @@ public class Grafica {
 					e1.printStackTrace();
 				}
 				
-				noleggi = Database.nuovoNoleggio(dataInizio, dataFine);
+				auto = Database.nuovoNoleggio(dataInizio, dataFine);
 			
 				
-				for (int i = 0; i < noleggi.size(); i++) {
-					list.add(noleggi.get(i).getNome());
-					list_1.add(noleggi.get(i).getAuto());
-					list_2.add(noleggi.get(i).getInizio().toString());
+				for (int i = 0; i < auto.size(); i++) {
+					list_10.add(auto.get(i).getTarga());
+					list_20.add(auto.get(i).getMarca());
+					list_30.add(auto.get(i).getModello());
 				}
 			}
 		});
-		btnAutoDisponibili.setBounds(281, 307, 124, 25);
+		btnAutoDisponibili.setBounds(537, 351, 124, 25);
 		btnAutoDisponibili.setText("Auto disponibili");
 		
 		DateTime dInizio = new DateTime(shlCarsharing, SWT.BORDER);
-		dInizio.setBounds(6, 307, 80, 24);
+		dInizio.setBounds(320, 369, 80, 24);
 		
 		DateTime dFine = new DateTime(shlCarsharing, SWT.BORDER);
-		dFine.setBounds(156, 307, 80, 24);
+		dFine.setBounds(419, 369, 80, 24);
 		
-		List listDisponibili = new List(shlCarsharing, SWT.BORDER);
-		listDisponibili.setBounds(0, 339, 250, 141);
-
+		
 		
 
 		
