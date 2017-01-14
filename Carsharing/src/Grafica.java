@@ -77,13 +77,35 @@ public class Grafica {
 		dateTime.setBounds(336, 142, 92, 24);
 
 		Label label = new Label(shlCarsharing, SWT.SEPARATOR | SWT.HORIZONTAL);
-		label.setBounds(0, 300, 694, 10);
+		label.setBounds(0, 275, 714, 10);
 
 		List list = new List(shlCarsharing, SWT.BORDER);
-		list.setBounds(23, 50, 173, 233);
+		list.setBounds(10, 89, 76, 180);
 		
 		txtnome = new Text(shlCarsharing, SWT.BORDER);
-		txtnome.setBounds(336, 99, 76, 21);
+		txtnome.setBounds(352, 102, 76, 21);
+		
+		Label lblDataInzio = new Label(shlCarsharing, SWT.NONE);
+		lblDataInzio.setBounds(264, 151, 64, 15);
+		lblDataInzio.setText("Data inzio");
+		
+		List list_1 = new List(shlCarsharing, SWT.BORDER);
+		list_1.setBounds(92, 89, 76, 180);
+		
+		List list_2 = new List(shlCarsharing, SWT.BORDER);
+		list_2.setBounds(174, 89, 76, 180);
+		
+		Label lblNome = new Label(shlCarsharing, SWT.NONE);
+		lblNome.setBounds(10, 69, 55, 15);
+		lblNome.setText("Nome");
+		
+		Label lblAuto = new Label(shlCarsharing, SWT.NONE);
+		lblAuto.setBounds(92, 69, 55, 15);
+		lblAuto.setText("Auto");
+		
+		Label lblDataInizio = new Label(shlCarsharing, SWT.NONE);
+		lblDataInizio.setBounds(174, 69, 55, 15);
+		lblDataInizio.setText("Data inizio");
 
 		Button btnNewButton = new Button(shlCarsharing, SWT.NONE);
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
@@ -93,18 +115,19 @@ public class Grafica {
 				java.text.DateFormat data = new SimpleDateFormat("yyyy-MM-dd");
 				Date dataN = null;
 				try {
-					dataN = (Date)(data.parse(dateTime.getYear() + "-" + dateTime.getMonth() + "-" + dateTime.getDay()));
+					dataN = (Date)(data.parse(dateTime.getYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDay()));
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
 				noleggi = Database.noleggiPerSocio(dataN, nome);
-				
-				list.removeAll(); // Ripulisco la lista
+			
 				
 				for (int i = 0; i < noleggi.size(); i++) {
-					list.add(noleggi.get(i).getAuto() + " " + noleggi.get(i).getCodice() + " " + noleggi.get(i).getInizio());
+					list.add(noleggi.get(i).getNome());
+					list_1.add(noleggi.get(i).getAuto());
+					list_2.add(noleggi.get(i).getInizio().toString());
 				}
 				
 				
@@ -112,32 +135,82 @@ public class Grafica {
 			}
 		});
 		btnNewButton.setText("CERCA");
-		btnNewButton.setBounds(245, 232, 124, 51);
+		btnNewButton.setBounds(281, 187, 124, 51);
 
 		Label lblNewLabel = new Label(shlCarsharing, SWT.NONE);
 		lblNewLabel.setImage(SWTResourceManager.getImage(Grafica.class, "/img/images.jpg"));
 		lblNewLabel.setBounds(481, 0, 200, 227);
 
 		Label lblNewLabel_1 = new Label(shlCarsharing, SWT.NONE);
-		lblNewLabel_1.setBounds(68, 19, 134, 25);
-		lblNewLabel_1.setText("Elenco dei Nolleggi");
+		lblNewLabel_1.setBounds(69, 25, 134, 25);
+		lblNewLabel_1.setText("Elenco dei Noleggi");
 
 		Label lblCredenzialiRicerca = new Label(shlCarsharing, SWT.NONE);
-		lblCredenzialiRicerca.setBounds(245, 35, 124, 15);
+		lblCredenzialiRicerca.setBounds(304, 69, 124, 15);
 		lblCredenzialiRicerca.setText("Credenziali ricerca");
 
 		Label label_1 = new Label(shlCarsharing, SWT.SEPARATOR | SWT.VERTICAL);
-		label_1.setBounds(446, 1, 2, 299);
+		label_1.setBounds(446, 1, 2, 277);
 
 		Label lblNomeSocio = new Label(shlCarsharing, SWT.NONE);
-		lblNomeSocio.setBounds(245, 105, 77, 15);
+		lblNomeSocio.setBounds(264, 105, 77, 15);
 		lblNomeSocio.setText("Nome socio");
+		
+		Label lblInizio = new Label(shlCarsharing, SWT.NONE);
+		lblInizio.setBounds(10, 286, 55, 15);
+		lblInizio.setText("Inizio :");
+		
+		Label lblFine = new Label(shlCarsharing, SWT.NONE);
+		lblFine.setBounds(156, 286, 55, 15);
+		lblFine.setText("Fine : ");
+		
+		Button btnAutoDisponibili = new Button(shlCarsharing, SWT.NONE);
+		btnAutoDisponibili.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				java.text.DateFormat data = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataInizio = null;
+				try {
+					dataInizio = (Date)(data.parse(dateTime.getYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDay()));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				java.text.DateFormat data1 = new SimpleDateFormat("yyyy-MM-dd");
+				Date dataFine = null;
+				try {
+					dataFine = (Date)(data.parse(dateTime.getYear() + "-" + (dateTime.getMonth()+1) + "-" + dateTime.getDay()));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				noleggi = Database.nuovoNoleggio(dataInizio, dataFine);
+			
+				
+				for (int i = 0; i < noleggi.size(); i++) {
+					list.add(noleggi.get(i).getNome());
+					list_1.add(noleggi.get(i).getAuto());
+					list_2.add(noleggi.get(i).getInizio().toString());
+				}
+			}
+		});
+		btnAutoDisponibili.setBounds(281, 307, 124, 25);
+		btnAutoDisponibili.setText("Auto disponibili");
+		
+		DateTime dInizio = new DateTime(shlCarsharing, SWT.BORDER);
+		dInizio.setBounds(6, 307, 80, 24);
+		
+		DateTime dFine = new DateTime(shlCarsharing, SWT.BORDER);
+		dFine.setBounds(156, 307, 80, 24);
+		
+		List listDisponibili = new List(shlCarsharing, SWT.BORDER);
+		listDisponibili.setBounds(0, 339, 250, 141);
 
 		
 
-		Label lblDataInzio = new Label(shlCarsharing, SWT.NONE);
-		lblDataInzio.setBounds(245, 151, 77, 15);
-		lblDataInzio.setText("Data inzio");
+		
 
 	}
 }
